@@ -20,7 +20,7 @@ export function employmentLabel(value: string): string {
 }
 
 export function scoreTone(score: number): string {
-  if (score >= 70) return "text-teal-800 bg-teal-50";
-  if (score >= 45) return "text-amber-800 bg-amber-50";
-  return "text-rose-800 bg-rose-50";
+  if (score >= 70) return "text-pine bg-[#eef3ee]";
+  if (score >= 45) return "text-brass bg-[#f6eedc]";
+  return "text-[#7a2e24] bg-[#f8ece9]";
 }

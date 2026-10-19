@@ -80,7 +80,7 @@ export default function ApplicationsPage() {
       {error ? <Alert>{error}</Alert> : null}
       {notice ? <Alert tone="success">{notice}</Alert> : null}
       {!rows ? (
-        <p className="text-sm text-stone-500">Loading applications…</p>
+        <p className="text-sm text-muted">Loading applications…</p>
       ) : rows.length === 0 ? (
         <EmptyState
           title="No applications in this view"
@@ -95,7 +95,7 @@ export default function ApplicationsPage() {
                   <Link href={`/jobs/${row.jobId}`} className="font-semibold hover:underline">
                     {row.job.title}
                   </Link>
-                  <p className="text-sm text-stone-600">
+                  <p className="text-sm text-muted">
                     {row.job.company} · updated {formatDate(row.updatedAt)}
                   </p>
                 </div>

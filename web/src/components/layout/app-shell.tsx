@@ -3,14 +3,15 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Wordmark } from "@/components/brand/wordmark";
 import { useAuth } from "@/lib/auth-context";
 
 const NAV = [
-  { href: "/dashboard", label: "Dashboard" },
-  { href: "/jobs", label: "Jobs" },
-  { href: "/saved", label: "Saved jobs" },
-  { href: "/applications", label: "Applications" },
-  { href: "/gaps", label: "Skill gaps" },
+  { href: "/dashboard", label: "Overview" },
+  { href: "/jobs", label: "Catalogue" },
+  { href: "/saved", label: "Saved" },
+  { href: "/applications", label: "Pipeline" },
+  { href: "/gaps", label: "Gaps" },
   { href: "/resumes", label: "CVs" },
   { href: "/profile", label: "Profile" },
 ];
@@ -27,38 +28,36 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   if (!ready || !user) {
     return (
-      <div className="flex min-h-screen items-center justify-center text-sm text-stone-500">
-        Loading…
+      <div className="flex min-h-screen items-center justify-center text-sm text-muted">
+        Preparing your workspace…
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-stone-100 text-stone-950">
-      <div className="flex items-center justify-between border-b border-stone-200 bg-white px-4 py-3 lg:hidden">
-        <Link href="/dashboard" className="font-semibold tracking-tight">
-          CareerLens
-        </Link>
+    <div className="min-h-screen text-ink">
+      <div className="flex items-center justify-between border-b border-line bg-cream/80 px-4 py-3 backdrop-blur lg:hidden">
+        <Wordmark href="/dashboard" />
         <button
           type="button"
-          className="rounded-md px-3 py-1 text-sm hover:bg-stone-100"
+          className="rounded-sm border border-line px-3 py-1 text-xs uppercase tracking-[0.16em]"
           onClick={() => setOpen((value) => !value)}
           aria-label="Toggle navigation"
         >
           {open ? "Close" : "Menu"}
         </button>
       </div>
-      <div className="lg:grid lg:grid-cols-[240px_1fr]">
+      <div className="lg:grid lg:grid-cols-[248px_1fr]">
         <aside
-          className={`${open ? "block" : "hidden"} border-b border-stone-200 bg-white lg:flex lg:min-h-screen lg:flex-col lg:border-b-0 lg:border-r`}
+          className={`${open ? "block" : "hidden"} border-b border-ink/20 bg-pine text-cream lg:flex lg:min-h-screen lg:flex-col lg:border-b-0`}
         >
-          <div className="hidden px-5 py-5 lg:block">
-            <Link href="/dashboard" className="text-lg font-semibold tracking-tight">
-              CareerLens
-            </Link>
-            <p className="mt-1 text-xs text-stone-500">Job matching, explained</p>
+          <div className="hidden px-5 py-7 lg:block">
+            <Wordmark href="/dashboard" inverted />
+            <p className="mt-3 text-[11px] uppercase tracking-[0.2em] text-cream/50">
+              Matching, with receipts
+            </p>
           </div>
-          <nav className="flex flex-col gap-0.5 p-3">
+          <nav className="flex flex-col gap-0.5 px-3 pb-4">
             {NAV.map((item) => {
               const active =
                 pathname === item.href || pathname.startsWith(`${item.href}/`);
@@ -67,10 +66,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   key={item.href}
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className={`rounded-md px-3 py-2 text-sm ${
+                  className={`rounded-sm px-3 py-2 text-sm ${
                     active
-                      ? "bg-teal-800 text-white"
-                      : "text-stone-700 hover:bg-stone-100"
+                      ? "bg-cream/10 text-cream"
+                      : "text-cream/65 hover:bg-cream/5 hover:text-cream"
                   }`}
                 >
                   {item.label}
@@ -78,22 +77,22 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               );
             })}
           </nav>
-          <div className="border-t border-stone-200 p-4 lg:mt-auto">
-            <p className="truncate text-sm font-medium">{user.fullName}</p>
-            <p className="truncate text-xs text-stone-500">{user.email}</p>
+          <div className="border-t border-cream/10 p-5 lg:mt-auto">
+            <p className="truncate text-sm text-cream">{user.fullName}</p>
+            <p className="truncate text-xs text-cream/50">{user.email}</p>
             <button
               type="button"
               onClick={() => {
                 logout();
                 router.replace("/login");
               }}
-              className="mt-3 text-sm text-stone-600 hover:text-stone-950"
+              className="mt-4 text-[11px] uppercase tracking-[0.18em] text-brass hover:text-cream"
             >
               Log out
             </button>
           </div>
         </aside>
-        <main className="px-4 py-6 sm:px-8">{children}</main>
+        <main className="px-4 py-8 sm:px-10 lg:px-12">{children}</main>
       </div>
     </div>
   );

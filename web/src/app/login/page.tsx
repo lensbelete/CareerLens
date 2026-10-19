@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
+import { Wordmark } from "@/components/brand/wordmark";
 import { Alert } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Field, Input } from "@/components/ui/field";
@@ -32,49 +33,63 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-4">
-      <form
-        onSubmit={onSubmit}
-        className="w-full max-w-md space-y-4 rounded-xl border border-stone-200 bg-white p-6 shadow-sm"
-      >
-        <div>
-          <Link href="/" className="text-sm text-stone-500 hover:text-stone-800">
-            CareerLens
-          </Link>
-          <h1 className="mt-2 text-2xl font-semibold">Log in</h1>
-          <p className="mt-1 text-sm text-stone-600">
-            Demo account is prefilled: demo@careerlens.dev after seeding.
+    <main className="grid min-h-screen lg:grid-cols-[1fr_1.1fr]">
+      <section className="hidden flex-col justify-between bg-pine px-10 py-10 text-cream lg:flex">
+        <Wordmark inverted />
+        <blockquote className="max-w-sm">
+          <p className="font-serif text-4xl leading-tight">
+            Overlap, written down. Not a hiring oracle.
           </p>
-        </div>
-        {error ? <Alert>{error}</Alert> : null}
-        <Field label="Email">
-          <Input
-            type="email"
-            autoComplete="email"
-            required
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-        </Field>
-        <Field label="Password">
-          <Input
-            type="password"
-            autoComplete="current-password"
-            required
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </Field>
-        <Button type="submit" className="w-full" disabled={pending}>
-          {pending ? "Signing in…" : "Sign in"}
-        </Button>
-        <p className="text-sm text-stone-600">
-          No account?{" "}
-          <Link href="/register" className="font-medium text-teal-800">
-            Register
-          </Link>
+          <p className="mt-6 text-sm leading-6 text-cream/60">
+            Sign in to compare your profile with the catalogue. The demo account
+            is ready after seeding.
+          </p>
+        </blockquote>
+        <p className="text-[11px] uppercase tracking-[0.2em] text-brass">
+          CareerLens · private to your account
         </p>
-      </form>
+      </section>
+      <section className="flex items-center justify-center px-4 py-16">
+        <form onSubmit={onSubmit} className="w-full max-w-md space-y-5">
+          <div className="lg:hidden">
+            <Wordmark />
+          </div>
+          <div>
+            <h1 className="font-serif text-4xl">Log in</h1>
+            <p className="mt-2 text-sm text-muted">
+              Demo after seed: demo@careerlens.dev / DemoPass123!
+            </p>
+          </div>
+          {error ? <Alert>{error}</Alert> : null}
+          <Field label="Email">
+            <Input
+              type="email"
+              autoComplete="email"
+              required
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+            />
+          </Field>
+          <Field label="Password">
+            <Input
+              type="password"
+              autoComplete="current-password"
+              required
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+          </Field>
+          <Button type="submit" className="w-full" disabled={pending}>
+            {pending ? "Signing in…" : "Sign in"}
+          </Button>
+          <p className="text-sm text-muted">
+            No account?{" "}
+            <Link href="/register" className="font-medium text-brass hover:text-ink">
+              Register
+            </Link>
+          </p>
+        </form>
+      </section>
     </main>
   );
 }

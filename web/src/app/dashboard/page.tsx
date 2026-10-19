@@ -28,7 +28,7 @@ export default function DashboardPage() {
         description="Counts come from your saved jobs, applications, and live match scores against the current catalogue."
       />
       {error ? <Alert>{error}</Alert> : null}
-      {!data && !error ? <p className="text-sm text-stone-500">Loading dashboard…</p> : null}
+      {!data && !error ? <p className="text-sm text-muted">Loading dashboard…</p> : null}
       {data ? (
         <div className="space-y-6">
           {!data.profileReady ? (
@@ -53,17 +53,17 @@ export default function DashboardPage() {
               ["Offers", data.totals.offers, "Recorded offers"],
             ].map(([label, value, hint]) => (
               <Card key={label}>
-                <p className="text-xs font-medium uppercase tracking-wide text-stone-500">
+                <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted">
                   {label}
                 </p>
-                <p className="mt-2 text-3xl font-semibold tabular-nums">{value}</p>
-                <p className="mt-1 text-xs text-stone-500">{hint}</p>
+                <p className="mt-3 font-serif text-4xl tabular-nums text-ink">{value}</p>
+                <p className="mt-1 text-xs text-muted">{hint}</p>
               </Card>
             ))}
           </div>
           <div className="grid gap-6 lg:grid-cols-3">
             <div className="space-y-3 lg:col-span-2">
-              <h2 className="text-sm font-semibold uppercase tracking-wide text-stone-500">
+              <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-muted">
                 Recommended from current jobs
               </h2>
               {data.recommended.length === 0 ? (
@@ -71,7 +71,7 @@ export default function DashboardPage() {
                   title="No jobs yet"
                   description="Seed the sample catalogue or add a job manually."
                   action={
-                    <Link href="/jobs" className="text-sm font-medium text-teal-800">
+                    <Link href="/jobs" className="text-sm font-medium text-brass">
                       Open jobs
                     </Link>
                   }
@@ -83,12 +83,12 @@ export default function DashboardPage() {
               )}
             </div>
             <div className="space-y-3">
-              <h2 className="text-sm font-semibold uppercase tracking-wide text-stone-500">
+              <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-muted">
                 Recurring skill gaps
               </h2>
               <Card>
                 {data.skillGaps.length === 0 ? (
-                  <p className="text-sm text-stone-600">
+                  <p className="text-sm text-muted">
                     No structured gaps yet. Upload a CV or wait until jobs are seeded.
                   </p>
                 ) : (
@@ -103,7 +103,7 @@ export default function DashboardPage() {
                     ))}
                   </ul>
                 )}
-                <Link href="/gaps" className="mt-4 inline-block text-sm font-medium text-teal-800">
+                <Link href="/gaps" className="mt-4 inline-block text-sm font-medium text-brass">
                   Full gap analysis
                 </Link>
               </Card>
@@ -115,7 +115,7 @@ export default function DashboardPage() {
                       <Link href={`/jobs/${job.id}`} className="hover:underline">
                         {job.title}
                       </Link>
-                      <span className="text-stone-500"> · {job.company}</span>
+                      <span className="text-muted"> · {job.company}</span>
                     </li>
                   ))}
                 </ul>

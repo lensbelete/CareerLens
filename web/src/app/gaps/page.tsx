@@ -32,12 +32,12 @@ function GapsContent() {
       />
       {error ? <Alert>{error}</Alert> : null}
       {!data ? (
-        <p className="text-sm text-stone-500">Comparing your profile with jobs…</p>
+        <p className="text-sm text-muted">Comparing your profile with jobs…</p>
       ) : data.match && data.job ? (
         <div className="space-y-4">
           <Card>
             <h2 className="text-lg font-semibold">{data.job.title}</h2>
-            <p className="text-sm text-stone-600">{data.job.company}</p>
+            <p className="text-sm text-muted">{data.job.company}</p>
             <p className="mt-3 text-sm leading-6">{data.match.explanation}</p>
           </Card>
           {data.match.recommendations.length === 0 ? (
@@ -55,7 +55,7 @@ function GapsContent() {
                   </Badge>
                   <Badge>{item.generatedBy}</Badge>
                 </div>
-                <p className="mt-2 text-sm text-stone-700">{item.suggestion}</p>
+                <p className="mt-2 text-sm text-ink/80">{item.suggestion}</p>
               </Card>
             ))
           )}
@@ -63,7 +63,7 @@ function GapsContent() {
       ) : (
         <div className="space-y-6">
           <Card>
-            <h2 className="text-sm font-semibold uppercase tracking-wide text-stone-500">
+            <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-muted">
               Most frequent missing skills
             </h2>
             {data.aggregated && data.aggregated.length > 0 ? (
@@ -76,12 +76,12 @@ function GapsContent() {
                         {item.kind}
                       </Badge>
                     </span>
-                    <span className="text-stone-500">{item.jobTitles.length} jobs</span>
+                    <span className="text-muted">{item.jobTitles.length} jobs</span>
                   </li>
                 ))}
               </ul>
             ) : (
-              <p className="mt-3 text-sm text-stone-600">No catalogue to compare yet.</p>
+              <p className="mt-3 text-sm text-muted">No catalogue to compare yet.</p>
             )}
           </Card>
           <div className="grid gap-3">
@@ -92,13 +92,13 @@ function GapsContent() {
                     <Link href={`/jobs/${row.job.id}`} className="font-semibold hover:underline">
                       {row.job.title}
                     </Link>
-                    <p className="text-sm text-stone-600">{row.job.company}</p>
+                    <p className="text-sm text-muted">{row.job.company}</p>
                   </div>
                   <span className={`rounded px-2 py-1 text-sm font-semibold tabular-nums ${scoreTone(row.score)}`}>
                     {row.score}
                   </span>
                 </div>
-                <p className="mt-3 text-sm text-stone-700">
+                <p className="mt-3 text-sm text-ink/80">
                   Missing required:{" "}
                   {row.missingRequired.length
                     ? row.missingRequired.map((item) => item.skill).join(", ")
@@ -106,7 +106,7 @@ function GapsContent() {
                 </p>
                 <Link
                   href={`/gaps?jobId=${row.job.id}`}
-                  className="mt-2 inline-block text-sm font-medium text-teal-800"
+                  className="mt-2 inline-block text-sm font-medium text-brass"
                 >
                   Recommendations for this role
                 </Link>
@@ -122,7 +122,7 @@ function GapsContent() {
 export default function GapsPage() {
   return (
     <AppShell>
-      <Suspense fallback={<p className="text-sm text-stone-500">Loading…</p>}>
+      <Suspense fallback={<p className="text-sm text-muted">Loading…</p>}>
         <GapsContent />
       </Suspense>
     </AppShell>

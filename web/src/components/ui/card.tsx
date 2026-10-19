@@ -7,7 +7,7 @@ export function Card({
 }) {
   return (
     <section
-      className={`rounded-xl border border-stone-200 bg-white p-5 shadow-sm ${className}`}
+      className={`rounded-sm border border-line bg-cream/90 p-5 shadow-[0_1px_0_rgba(22,19,15,0.04)] ${className}`}
     >
       {children}
     </section>
@@ -24,11 +24,11 @@ export function PageHeader({
   actions?: React.ReactNode;
 }) {
   return (
-    <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <div className="mb-8 flex flex-col gap-4 border-b border-line pb-6 sm:flex-row sm:items-end sm:justify-between">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-stone-950">{title}</h1>
+        <h1 className="font-serif text-3xl text-ink sm:text-[2.15rem]">{title}</h1>
         {description ? (
-          <p className="mt-1 max-w-2xl text-sm text-stone-600">{description}</p>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-muted">{description}</p>
         ) : null}
       </div>
       {actions}
@@ -46,10 +46,10 @@ export function EmptyState({
   action?: React.ReactNode;
 }) {
   return (
-    <Card className="py-12 text-center">
-      <h2 className="text-base font-semibold text-stone-900">{title}</h2>
-      <p className="mx-auto mt-2 max-w-md text-sm text-stone-600">{description}</p>
-      {action ? <div className="mt-4 flex justify-center">{action}</div> : null}
+    <Card className="py-14 text-center">
+      <h2 className="font-serif text-xl text-ink">{title}</h2>
+      <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-muted">{description}</p>
+      {action ? <div className="mt-5 flex justify-center">{action}</div> : null}
     </Card>
   );
 }
@@ -62,12 +62,12 @@ export function Alert({
   children: React.ReactNode;
 }) {
   const styles = {
-    error: "border-rose-200 bg-rose-50 text-rose-900",
-    success: "border-teal-200 bg-teal-50 text-teal-900",
-    info: "border-stone-200 bg-stone-50 text-stone-800",
+    error: "border-[#d7b4ae] bg-[#f8ece9] text-[#7a2e24]",
+    success: "border-[#c9d4c7] bg-[#eef3ee] text-pine",
+    info: "border-line bg-cream text-ink",
   }[tone];
   return (
-    <div className={`rounded-md border px-3 py-2 text-sm ${styles}`} role="status">
+    <div className={`rounded-sm border px-3 py-2.5 text-sm ${styles}`} role="status">
       {children}
     </div>
   );
@@ -81,15 +81,25 @@ export function Badge({
   tone?: "neutral" | "teal" | "amber" | "rose" | "sample";
 }) {
   const styles = {
-    neutral: "bg-stone-100 text-stone-700",
-    teal: "bg-teal-50 text-teal-800",
-    amber: "bg-amber-50 text-amber-800",
-    rose: "bg-rose-50 text-rose-800",
-    sample: "bg-stone-900 text-white",
+    neutral: "border-line bg-paper text-ink/80",
+    teal: "border-[#c9d4c7] bg-[#eef3ee] text-pine",
+    amber: "border-[#e4d3b0] bg-[#f6eedc] text-brass",
+    rose: "border-[#d7b4ae] bg-[#f8ece9] text-[#7a2e24]",
+    sample: "border-ink bg-ink text-cream",
   }[tone];
   return (
-    <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${styles}`}>
+    <span
+      className={`inline-flex items-center rounded-sm border px-1.5 py-0.5 text-[11px] font-medium tracking-wide ${styles}`}
+    >
       {children}
     </span>
+  );
+}
+
+export function Eyebrow({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-brass">
+      {children}
+    </p>
   );
 }

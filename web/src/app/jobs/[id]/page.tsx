@@ -81,7 +81,7 @@ export default function JobDetailPage({
       {error ? <Alert>{error}</Alert> : null}
       {notice ? <Alert tone="success">{notice}</Alert> : null}
       {!job ? (
-        <p className="text-sm text-stone-500">Loading job…</p>
+        <p className="text-sm text-muted">Loading job…</p>
       ) : (
         <>
           <PageHeader
@@ -104,10 +104,10 @@ export default function JobDetailPage({
           <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
             <div className="space-y-4">
               <Card>
-                <h2 className="text-sm font-semibold uppercase tracking-wide text-stone-500">
+                <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-muted">
                   Description
                 </h2>
-                <p className="mt-3 whitespace-pre-wrap text-sm leading-7 text-stone-700">
+                <p className="mt-3 whitespace-pre-wrap text-sm leading-7 text-ink/80">
                   {job.description}
                 </p>
               </Card>
@@ -115,21 +115,21 @@ export default function JobDetailPage({
                 <Card>
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <h2 className="text-sm font-semibold uppercase tracking-wide text-stone-500">
+                      <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-muted">
                         Match analysis
                       </h2>
-                      <p className="mt-1 text-xs text-stone-500">Method: {match.method}</p>
+                      <p className="mt-1 text-xs text-muted">Method: {match.method}</p>
                     </div>
-                    <span className={`rounded-md px-3 py-1 text-2xl font-semibold tabular-nums ${scoreTone(match.score)}`}>
+                    <span className={`rounded-sm px-3 py-1 font-serif text-4xl tabular-nums ${scoreTone(match.score)}`}>
                       {match.score}
                     </span>
                   </div>
-                  <p className="mt-3 text-sm leading-6 text-stone-700">{match.explanation}</p>
-                  <p className="mt-2 text-xs text-stone-500">{match.disclaimer}</p>
+                  <p className="mt-3 text-sm leading-6 text-ink/80">{match.explanation}</p>
+                  <p className="mt-2 text-xs text-muted">{match.disclaimer}</p>
                   <dl className="mt-4 grid grid-cols-2 gap-2 text-sm sm:grid-cols-5">
                     {Object.entries(match.breakdown).map(([key, value]) => (
-                      <div key={key} className="rounded-md bg-stone-50 p-2">
-                        <dt className="text-xs capitalize text-stone-500">{key.replace(/([A-Z])/g, " $1")}</dt>
+                      <div key={key} className="rounded-sm bg-paper p-2">
+                        <dt className="text-xs capitalize text-muted">{key.replace(/([A-Z])/g, " $1")}</dt>
                         <dd className="font-medium tabular-nums">{Math.round(value * 100)}%</dd>
                       </div>
                     ))}
@@ -144,7 +144,7 @@ export default function JobDetailPage({
                     <h3 className="text-sm font-semibold">Matched skills</h3>
                     <ul className="mt-3 space-y-2 text-sm">
                       {match.matchedSkills.length === 0 ? (
-                        <li className="text-stone-500">None evidenced.</li>
+                        <li className="text-muted">None evidenced.</li>
                       ) : (
                         match.matchedSkills.map((item) => (
                           <li key={`${item.skill}-${item.evidence}`}>
@@ -152,7 +152,7 @@ export default function JobDetailPage({
                             <Badge tone={item.evidence === "explicit" ? "teal" : "amber"}>
                               {item.evidence}
                             </Badge>
-                            <p className="text-xs text-stone-500">{item.source}</p>
+                            <p className="text-xs text-muted">{item.source}</p>
                           </li>
                         ))
                       )}
@@ -162,7 +162,7 @@ export default function JobDetailPage({
                     <h3 className="text-sm font-semibold">Missing required</h3>
                     <ul className="mt-3 space-y-2 text-sm">
                       {match.missingRequired.length === 0 ? (
-                        <li className="text-stone-500">No required skills missing.</li>
+                        <li className="text-muted">No required skills missing.</li>
                       ) : (
                         match.missingRequired.map((item) => (
                           <li key={item.skill} className="capitalize">
@@ -171,7 +171,7 @@ export default function JobDetailPage({
                         ))
                       )}
                     </ul>
-                    <Link href={`/gaps?jobId=${job.id}`} className="mt-3 inline-block text-sm font-medium text-teal-800">
+                    <Link href={`/gaps?jobId=${job.id}`} className="mt-3 inline-block text-sm font-medium text-brass">
                       Recommendations
                     </Link>
                   </Card>

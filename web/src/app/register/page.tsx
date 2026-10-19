@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
+import { Wordmark } from "@/components/brand/wordmark";
 import { Alert } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Field, Input } from "@/components/ui/field";
@@ -37,58 +38,73 @@ export default function RegisterPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-4">
-      <form
-        onSubmit={onSubmit}
-        className="w-full max-w-md space-y-4 rounded-xl border border-stone-200 bg-white p-6 shadow-sm"
-      >
-        <div>
-          <Link href="/" className="text-sm text-stone-500 hover:text-stone-800">
-            CareerLens
-          </Link>
-          <h1 className="mt-2 text-2xl font-semibold">Create an account</h1>
-          <p className="mt-1 text-sm text-stone-600">
-            Your CVs, profile, and applications stay private to this account.
+    <main className="grid min-h-screen lg:grid-cols-[1fr_1.1fr]">
+      <section className="hidden flex-col justify-between bg-pine px-10 py-10 text-cream lg:flex">
+        <Wordmark inverted />
+        <blockquote className="max-w-sm">
+          <p className="font-serif text-4xl leading-tight">
+            A private ledger for the search.
           </p>
-        </div>
-        {error ? <Alert>{error}</Alert> : null}
-        <Field label="Full name">
-          <Input
-            required
-            minLength={2}
-            value={fullName}
-            onChange={(event) => setFullName(event.target.value)}
-          />
-        </Field>
-        <Field label="Email">
-          <Input
-            type="email"
-            autoComplete="email"
-            required
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-        </Field>
-        <Field label="Password" hint="At least 8 characters.">
-          <Input
-            type="password"
-            autoComplete="new-password"
-            required
-            minLength={8}
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </Field>
-        <Button type="submit" className="w-full" disabled={pending}>
-          {pending ? "Creating…" : "Create account"}
-        </Button>
-        <p className="text-sm text-stone-600">
-          Already registered?{" "}
-          <Link href="/login" className="font-medium text-teal-800">
-            Log in
-          </Link>
+          <p className="mt-6 text-sm leading-6 text-cream/60">
+            CVs, notes, and applications stay on your account. Nothing here is
+            shared with employers.
+          </p>
+        </blockquote>
+        <p className="text-[11px] uppercase tracking-[0.2em] text-brass">
+          CareerLens · structured, editable, yours
         </p>
-      </form>
+      </section>
+      <section className="flex items-center justify-center px-4 py-16">
+        <form onSubmit={onSubmit} className="w-full max-w-md space-y-5">
+          <div className="lg:hidden">
+            <Wordmark />
+          </div>
+          <div>
+            <h1 className="font-serif text-4xl">Create an account</h1>
+            <p className="mt-2 text-sm text-muted">
+              Password at least 8 characters. We hash it; we never store it in
+              plaintext.
+            </p>
+          </div>
+          {error ? <Alert>{error}</Alert> : null}
+          <Field label="Full name">
+            <Input
+              required
+              minLength={2}
+              value={fullName}
+              onChange={(event) => setFullName(event.target.value)}
+            />
+          </Field>
+          <Field label="Email">
+            <Input
+              type="email"
+              autoComplete="email"
+              required
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+            />
+          </Field>
+          <Field label="Password">
+            <Input
+              type="password"
+              autoComplete="new-password"
+              required
+              minLength={8}
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+          </Field>
+          <Button type="submit" className="w-full" disabled={pending}>
+            {pending ? "Creating…" : "Create account"}
+          </Button>
+          <p className="text-sm text-muted">
+            Already registered?{" "}
+            <Link href="/login" className="font-medium text-brass hover:text-ink">
+              Log in
+            </Link>
+          </p>
+        </form>
+      </section>
     </main>
   );
 }

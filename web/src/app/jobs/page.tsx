@@ -168,13 +168,13 @@ export default function JobsPage() {
           <option value="company">Company</option>
         </Select>
         {jobs ? (
-          <p className="text-sm text-stone-500">
+          <p className="text-sm text-muted">
             {jobs.meta.total} jobs · page {jobs.meta.page} of {jobs.meta.totalPages}
           </p>
         ) : null}
       </div>
       {!jobs ? (
-        <p className="text-sm text-stone-500">Loading jobs…</p>
+        <p className="text-sm text-muted">Loading jobs…</p>
       ) : jobs.data.length === 0 ? (
         <EmptyState
           title="No jobs match those filters"

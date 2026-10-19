@@ -125,11 +125,11 @@ export default function ProfilePage() {
             </Button>
           </div>
           {profile.experience.length === 0 ? (
-            <p className="text-sm text-stone-500">No experience listed.</p>
+            <p className="text-sm text-muted">No experience listed.</p>
           ) : (
             <div className="space-y-4">
               {profile.experience.map((item, index) => (
-                <div key={index} className="grid gap-2 rounded-md border border-stone-200 p-3 md:grid-cols-2">
+                <div key={index} className="grid gap-2 rounded-sm border border-line p-3 md:grid-cols-2">
                   <Input
                     placeholder="Title"
                     value={item.title}
@@ -231,7 +231,7 @@ export default function ProfilePage() {
             </Button>
           </div>
           {profile.projects.length === 0 ? (
-            <p className="text-sm text-stone-500">No projects listed.</p>
+            <p className="text-sm text-muted">No projects listed.</p>
           ) : (
             profile.projects.map((item, index) => (
               <div key={index} className="mb-3 grid gap-2 md:grid-cols-2">

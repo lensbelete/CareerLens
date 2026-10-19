@@ -27,7 +27,7 @@ export default function SavedJobsPage() {
       />
       {error ? <Alert>{error}</Alert> : null}
       {!jobs ? (
-        <p className="text-sm text-stone-500">Loading saved jobs…</p>
+        <p className="text-sm text-muted">Loading saved jobs…</p>
       ) : jobs.length === 0 ? (
         <EmptyState
           title="Nothing saved yet"

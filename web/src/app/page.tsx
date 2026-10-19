@@ -1,78 +1,107 @@
 import Link from "next/link";
+import { Wordmark } from "@/components/brand/wordmark";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#f5f2ec] text-stone-950">
-      <header className="mx-auto flex max-w-5xl items-center justify-between px-6 py-6">
-        <span className="text-lg font-semibold tracking-tight">CareerLens</span>
-        <nav className="flex items-center gap-3 text-sm">
-          <Link href="/login" className="rounded-md px-3 py-2 hover:bg-white">
+    <div className="min-h-screen text-ink">
+      <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
+        <Wordmark />
+        <nav className="flex items-center gap-2 text-sm">
+          <Link href="/login" className="px-3 py-2 text-muted hover:text-ink">
             Log in
           </Link>
           <Link
             href="/register"
-            className="rounded-md bg-teal-800 px-3 py-2 font-medium text-white hover:bg-teal-900"
+            className="rounded-sm bg-pine px-4 py-2 text-[13px] font-medium tracking-wide text-cream hover:bg-ink"
           >
             Create account
           </Link>
         </nav>
       </header>
-      <main className="mx-auto max-w-5xl px-6 pb-20">
-        <section className="max-w-2xl pt-10">
-          <p className="text-sm font-medium uppercase tracking-wide text-teal-800">
-            Job matching with receipts
-          </p>
-          <h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">
-            See why a role fits — and where your CV is silent.
-          </h1>
-          <p className="mt-5 text-lg leading-8 text-stone-700">
-            CareerLens compares your profile and CV to a job description. You get a
-            match score, evidenced vs inferred skills, missing requirements, and
-            an explanation of the weights. The score is overlap, not a forecast
-            of being hired.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href="/register"
-              className="rounded-md bg-teal-800 px-4 py-2.5 text-sm font-medium text-white hover:bg-teal-900"
-            >
-              Start with a profile
-            </Link>
-            <Link
-              href="/login"
-              className="rounded-md border border-stone-300 bg-white px-4 py-2.5 text-sm font-medium hover:bg-stone-50"
-            >
-              Use the demo account
-            </Link>
+      <main className="mx-auto max-w-6xl px-6 pb-24">
+        <section className="grid items-end gap-12 border-b border-line py-10 lg:grid-cols-[1.15fr_0.85fr] lg:py-16">
+          <div>
+            <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-brass">
+              A quieter kind of job intelligence
+            </p>
+            <h1 className="mt-5 max-w-xl font-serif text-5xl leading-[1.08] text-ink sm:text-6xl">
+              See the overlap. Keep the doubt honest.
+            </h1>
+            <p className="mt-6 max-w-lg text-lg leading-8 text-muted">
+              CareerLens compares a CV with a job description and shows what is
+              evidenced, inferred, or missing. The score is overlap — not a
+              prediction that you will be hired.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href="/register"
+                className="rounded-sm bg-pine px-5 py-2.5 text-sm font-medium text-cream hover:bg-ink"
+              >
+                Start with a profile
+              </Link>
+              <Link
+                href="/login"
+                className="rounded-sm border border-line bg-cream/70 px-5 py-2.5 text-sm hover:border-ink/30"
+              >
+                Use the demo account
+              </Link>
+            </div>
           </div>
+          <aside className="rounded-sm border border-line bg-cream/80 p-6 shadow-[0_20px_50px_-30px_rgba(22,19,15,0.35)]">
+            <p className="text-[11px] uppercase tracking-[0.2em] text-brass">
+              Specimen · Senior Frontend
+            </p>
+            <div className="mt-4 flex items-baseline justify-between">
+              <p className="text-sm text-muted">Match method · lexical</p>
+              <p className="font-serif text-5xl tabular-nums">68</p>
+            </div>
+            <dl className="mt-6 space-y-3 border-t border-line pt-5 text-sm">
+              <div className="flex justify-between gap-4">
+                <dt className="text-muted">Explicit</dt>
+                <dd>TypeScript, React</dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="text-muted">Inferred</dt>
+                <dd>Next.js</dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="text-muted">Missing</dt>
+                <dd className="text-right">None required</dd>
+              </div>
+            </dl>
+            <p className="mt-5 text-xs leading-5 text-muted">
+              Illustration of a scored listing. Live scores come from your profile
+              and the catalogue — never hardcoded in the product.
+            </p>
+          </aside>
         </section>
-        <section className="mt-16 grid gap-4 md:grid-cols-3">
+        <section className="grid gap-px bg-line md:grid-cols-3">
           {[
             {
-              title: "CV in, structured profile out",
-              body: "Upload a PDF. We extract skills, education, experience, and projects. You can edit anything the parser got wrong.",
+              index: "01",
+              title: "A CV, then a ledger",
+              body: "Upload a PDF. We extract skills, education, experience, and projects. Edit anything the parser missed — we do not invent employers or degrees.",
             },
             {
-              title: "Hybrid matching",
-              body: "Required and preferred skills, lexical similarity, and optional embeddings when an API key is configured. Otherwise the fallback is deterministic and visible.",
+              index: "02",
+              title: "Weights you can read",
+              body: "Required skills, preferred skills, text similarity, experience, education. Embeddings if you configure them; otherwise a deterministic fallback.",
             },
             {
-              title: "A tracker that persists",
-              body: "Save roles, move them through Applied, Interview, Offer, and Rejected, and keep notes. Dashboard numbers come from that data.",
+              index: "03",
+              title: "A pipeline that persists",
+              body: "Saved, Applied, Interview, Offer, Rejected. Dashboard counts are taken from those records, including empty states for a new account.",
             },
           ].map((item) => (
-            <article
-              key={item.title}
-              className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm"
-            >
-              <h2 className="font-semibold">{item.title}</h2>
-              <p className="mt-2 text-sm leading-6 text-stone-600">{item.body}</p>
+            <article key={item.index} className="bg-background px-0 py-10 md:px-8 md:py-12">
+              <p className="font-serif text-2xl text-brass">{item.index}</p>
+              <h2 className="mt-4 font-serif text-2xl">{item.title}</h2>
+              <p className="mt-3 text-sm leading-7 text-muted">{item.body}</p>
             </article>
           ))}
         </section>
-        <p className="mt-12 text-sm text-stone-500">
-          Sample jobs in the seed dataset are labelled Sample. They are not live
-          vacancies.
+        <p className="mt-10 text-xs uppercase tracking-[0.16em] text-muted">
+          Sample jobs in the seed set are labelled Sample. They are not live vacancies.
         </p>
       </main>
     </div>

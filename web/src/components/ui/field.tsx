@@ -13,16 +13,16 @@ export function Field({
 }) {
   return (
     <label className="block space-y-1.5">
-      <span className="text-sm font-medium text-stone-800">{label}</span>
+      <span className="text-[13px] font-medium tracking-wide text-ink">{label}</span>
       {children}
-      {hint && !error ? <span className="block text-xs text-stone-500">{hint}</span> : null}
-      {error ? <span className="block text-xs text-rose-700">{error}</span> : null}
+      {hint && !error ? <span className="block text-xs text-muted">{hint}</span> : null}
+      {error ? <span className="block text-xs text-[#7a2e24]">{error}</span> : null}
     </label>
   );
 }
 
 const controlClass =
-  "w-full rounded-md border border-stone-300 bg-white px-3 py-2 text-sm text-stone-900 shadow-sm outline-none placeholder:text-stone-400 focus:border-teal-800 focus:ring-2 focus:ring-teal-800/20";
+  "w-full rounded-sm border border-line bg-cream px-3 py-2.5 text-sm text-ink outline-none placeholder:text-muted/70 transition-colors focus:border-brass focus:ring-1 focus:ring-brass/30";
 
 export function Input({ className = "", ...props }: InputHTMLAttributes<HTMLInputElement>) {
   return <input className={`${controlClass} ${className}`} {...props} />;

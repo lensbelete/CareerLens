@@ -77,7 +77,7 @@ export default function ResumesPage() {
               name="file"
               type="file"
               accept="application/pdf"
-              className="block w-full text-sm file:mr-3 file:rounded-md file:border-0 file:bg-stone-100 file:px-3 file:py-2"
+              className="block w-full text-sm file:mr-3 file:rounded-sm file:border-0 file:bg-paper file:px-3 file:py-2"
             />
           </label>
           <Button type="submit" disabled={pending}>
@@ -86,7 +86,7 @@ export default function ResumesPage() {
         </form>
       </Card>
       {!resumes ? (
-        <p className="text-sm text-stone-500">Loading CVs…</p>
+        <p className="text-sm text-muted">Loading CVs…</p>
       ) : resumes.length === 0 ? (
         <EmptyState
           title="No CVs uploaded"
@@ -99,20 +99,20 @@ export default function ResumesPage() {
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                   <h2 className="font-semibold">{resume.originalFilename}</h2>
-                  <p className="text-sm text-stone-600">
+                  <p className="text-sm text-muted">
                     {formatBytes(resume.sizeBytes)} · {formatDate(resume.createdAt)}
                   </p>
                 </div>
                 {resume.isActive ? <Badge tone="teal">Active</Badge> : null}
               </div>
               {resume.parsedData ? (
-                <p className="mt-3 text-sm text-stone-700">
+                <p className="mt-3 text-sm text-ink/80">
                   Extracted {resume.parsedData.skills.length} skills,{" "}
                   {resume.parsedData.experience.length} experience entries,{" "}
                   {resume.parsedData.education.length} education entries.
                 </p>
               ) : (
-                <p className="mt-3 text-sm text-stone-600">
+                <p className="mt-3 text-sm text-muted">
                   Text could not be extracted. You can still keep the file and fill the profile by hand.
                 </p>
               )}

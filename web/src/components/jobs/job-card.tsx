@@ -13,30 +13,36 @@ export function JobCard({
   return (
     <Link
       href={`/jobs/${job.id}`}
-      className="block rounded-xl border border-stone-200 bg-white p-5 shadow-sm transition-colors hover:border-teal-800"
+      className="group block rounded-sm border border-line bg-cream/90 p-5 transition-colors hover:border-brass/70"
     >
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h2 className="text-base font-semibold text-stone-950">{job.title}</h2>
-          <p className="mt-1 text-sm text-stone-600">
-            {job.company} · {job.location} · {employmentLabel(job.employmentType)}
+          <h2 className="font-serif text-xl text-ink group-hover:text-pine">
+            {job.title}
+          </h2>
+          <p className="mt-1 text-sm text-muted">
+            {job.company}
+            <span className="mx-2 text-line">/</span>
+            {job.location}
+            <span className="mx-2 text-line">/</span>
+            {employmentLabel(job.employmentType)}
           </p>
         </div>
         <div className="flex items-center gap-2">
           {job.source === "sample" ? <Badge tone="sample">Sample</Badge> : null}
           {typeof score === "number" ? (
-            <span className="rounded-md bg-stone-100 px-2 py-1 text-sm font-semibold tabular-nums">
-              {score}
-            </span>
+            <span className="font-serif text-2xl tabular-nums text-ink">{score}</span>
           ) : null}
         </div>
       </div>
-      <div className="mt-3 flex flex-wrap gap-1.5">
+      <div className="mt-4 flex flex-wrap gap-1.5">
         {job.requiredSkills.slice(0, 6).map((skill) => (
           <Badge key={skill}>{skill}</Badge>
         ))}
       </div>
-      <p className="mt-3 text-xs text-stone-500">Added {formatDate(job.createdAt)}</p>
+      <p className="mt-4 text-[11px] uppercase tracking-[0.16em] text-muted">
+        Added {formatDate(job.createdAt)}
+      </p>
     </Link>
   );
 }
