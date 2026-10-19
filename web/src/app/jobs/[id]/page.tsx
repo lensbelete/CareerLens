@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Field, Select, Textarea } from "@/components/ui/field";
 import { apiFetch, ApiError } from "@/lib/api";
 import { employmentLabel, scoreTone } from "@/lib/format";
+import { notifyError, notifySuccess } from "@/lib/notify";
 import type { Job, MatchResult } from "@/types/api";
 
 export default function JobDetailPage({
@@ -19,7 +20,6 @@ export default function JobDetailPage({
   const [job, setJob] = useState<Job | null>(null);
   const [match, setMatch] = useState<MatchResult | null>(null);
   const [error, setError] = useState("");
-  const [notice, setNotice] = useState("");
   const [notes, setNotes] = useState("");
   const [status, setStatus] = useState("applied");
   const [pending, setPending] = useState(false);
@@ -47,14 +47,14 @@ export default function JobDetailPage({
       if (job.saved) {
         await apiFetch(`/jobs/${job.id}/save`, { method: "DELETE" });
         setJob({ ...job, saved: false });
-        setNotice("Removed from saved jobs.");
+        notifySuccess("Removed from saved jobs.");
       } else {
         await apiFetch(`/jobs/${job.id}/save`, { method: "POST" });
         setJob({ ...job, saved: true });
-        setNotice("Job saved.");
+        notifySuccess("Job saved.");
       }
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Could not update saved job");
+      notifyError(err instanceof ApiError ? err.message : "Could not update saved job");
     } finally {
       setPending(false);
     }
@@ -68,9 +68,9 @@ export default function JobDetailPage({
         method: "POST",
         body: JSON.stringify({ jobId: job.id, status, notes }),
       });
-      setNotice("Application saved to your tracker.");
+      notifySuccess("Application saved to your tracker.");
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Could not save application");
+      notifyError(err instanceof ApiError ? err.message : "Could not save application");
     } finally {
       setPending(false);
     }
@@ -79,7 +79,6 @@ export default function JobDetailPage({
   return (
     <AppShell>
       {error ? <Alert>{error}</Alert> : null}
-      {notice ? <Alert tone="success">{notice}</Alert> : null}
       {!job ? (
         <p className="text-sm text-muted">Loading job…</p>
       ) : (

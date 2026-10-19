@@ -1,9 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  transpilePackages: ["@mantine/core", "@mantine/hooks", "@mantine/notifications"],
   turbopack: {
     rules: {
-      "*.css": {
+      "./src/**/*.css": {
         loaders: ["@tailwindcss/turbopack"],
         as: "*.css",
       },

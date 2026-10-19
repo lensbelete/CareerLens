@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AppShell } from "@/components/layout/app-shell";
-import { Alert, Badge, Card, EmptyState, PageHeader } from "@/components/ui/card";
+import { Alert, Card, EmptyState, PageHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Select, Textarea } from "@/components/ui/field";
+import { Field, Select, Textarea } from "@/components/ui/field";
 import { apiFetch, ApiError } from "@/lib/api";
 import { formatDate } from "@/lib/format";
+import { notifyError, notifySuccess } from "@/lib/notify";
+import { useConfirm } from "@/components/ui/confirm-modal";
 import type { Application, ApplicationStatus } from "@/types/api";
 
 const STATUSES: ApplicationStatus[] = [
@@ -19,10 +21,10 @@ const STATUSES: ApplicationStatus[] = [
 ];
 
 export default function ApplicationsPage() {
+  const confirm = useConfirm();
   const [rows, setRows] = useState<Application[] | null>(null);
   const [status, setStatus] = useState("");
   const [error, setError] = useState("");
-  const [notice, setNotice] = useState("");
 
   async function load(nextStatus = status) {
     const path = nextStatus ? `/applications?status=${nextStatus}` : "/applications";
@@ -37,27 +39,32 @@ export default function ApplicationsPage() {
   }, [status]);
 
   async function update(id: string, patch: Partial<Application>) {
-    setError("");
     try {
       await apiFetch(`/applications/${id}`, {
         method: "PATCH",
         body: JSON.stringify(patch),
       });
       await load();
-      setNotice("Application updated.");
+      notifySuccess("Application updated.");
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Update failed");
+      notifyError(err instanceof ApiError ? err.message : "Update failed");
     }
   }
 
   async function remove(id: string) {
-    if (!window.confirm("Remove this application from your tracker?")) return;
+    const ok = await confirm({
+      title: "Remove application",
+      message: "Remove this application from your tracker?",
+      confirmLabel: "Remove",
+      danger: true,
+    });
+    if (!ok) return;
     try {
       await apiFetch(`/applications/${id}`, { method: "DELETE" });
       await load();
-      setNotice("Application removed.");
+      notifySuccess("Application removed.");
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Remove failed");
+      notifyError(err instanceof ApiError ? err.message : "Remove failed");
     }
   }
 
@@ -78,7 +85,6 @@ export default function ApplicationsPage() {
         }
       />
       {error ? <Alert>{error}</Alert> : null}
-      {notice ? <Alert tone="success">{notice}</Alert> : null}
       {!rows ? (
         <p className="text-sm text-muted">Loading applications…</p>
       ) : rows.length === 0 ? (
@@ -90,8 +96,8 @@ export default function ApplicationsPage() {
         <div className="grid gap-3">
           {rows.map((row) => (
             <Card key={row.id}>
-              <div className="flex flex-wrap items-start justify-between gap-3">
-                <div>
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="min-w-0">
                   <Link href={`/jobs/${row.jobId}`} className="font-semibold hover:underline">
                     {row.job.title}
                   </Link>
@@ -99,32 +105,45 @@ export default function ApplicationsPage() {
                     {row.job.company} · updated {formatDate(row.updatedAt)}
                   </p>
                 </div>
-                <Badge tone={row.status === "rejected" ? "rose" : "teal"}>{row.status}</Badge>
+                <div className="flex items-center gap-2">
+                  <div className="w-36">
+                    <Select
+                      className="h-9 py-0"
+                      value={row.status}
+                      onChange={(e) =>
+                        update(row.id, { status: e.target.value as ApplicationStatus })
+                      }
+                      aria-label="Application status"
+                    >
+                      {STATUSES.map((item) => (
+                        <option key={item} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                    </Select>
+                  </div>
+                  <Button
+                    className="h-9"
+                    variant="danger"
+                    onClick={() => remove(row.id)}
+                  >
+                    Remove
+                  </Button>
+                </div>
               </div>
-              <div className="mt-4 grid gap-3 md:grid-cols-[160px_1fr_auto]">
-                <Select
-                  value={row.status}
-                  onChange={(e) =>
-                    update(row.id, { status: e.target.value as ApplicationStatus })
-                  }
-                >
-                  {STATUSES.map((item) => (
-                    <option key={item} value={item}>
-                      {item}
-                    </option>
-                  ))}
-                </Select>
-                <Textarea
-                  defaultValue={row.notes}
-                  onBlur={(e) => {
-                    if (e.target.value !== row.notes) {
-                      void update(row.id, { notes: e.target.value });
-                    }
-                  }}
-                />
-                <Button variant="danger" onClick={() => remove(row.id)}>
-                  Remove
-                </Button>
+              <div className="mt-4">
+                <Field label="Notes">
+                  <Textarea
+                    className="min-h-24"
+                    placeholder="Add a note…"
+                    defaultValue={row.notes}
+                    onBlur={(e) => {
+                      if (e.target.value !== row.notes) {
+                        void update(row.id, { notes: e.target.value });
+                      }
+                    }}
+                  />
+                </Field>
               </div>
             </Card>
           ))}

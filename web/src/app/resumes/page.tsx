@@ -6,12 +6,14 @@ import { Alert, Badge, Card, EmptyState, PageHeader } from "@/components/ui/card
 import { Button } from "@/components/ui/button";
 import { apiFetch, ApiError } from "@/lib/api";
 import { formatBytes, formatDate } from "@/lib/format";
+import { notifyError, notifySuccess } from "@/lib/notify";
+import { useConfirm } from "@/components/ui/confirm-modal";
 import type { Resume } from "@/types/api";
 
 export default function ResumesPage() {
+  const confirm = useConfirm();
   const [resumes, setResumes] = useState<Resume[] | null>(null);
   const [error, setError] = useState("");
-  const [notice, setNotice] = useState("");
   const [pending, setPending] = useState(false);
 
   async function load() {
@@ -29,36 +31,49 @@ export default function ResumesPage() {
     const input = event.currentTarget.elements.namedItem("file") as HTMLInputElement;
     const file = input.files?.[0];
     if (!file) {
-      setError("Choose a PDF first");
+      notifyError("Choose a PDF first");
       return;
     }
     setPending(true);
-    setError("");
     try {
       const body = new FormData();
       body.append("file", file);
       await apiFetch("/resumes", { method: "POST", body });
       input.value = "";
       await load();
-      setNotice("CV uploaded. Review the extracted fields on your profile.");
+      notifySuccess("CV uploaded. Review the extracted fields on your profile.");
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Upload failed");
+      notifyError(err instanceof ApiError ? err.message : "Upload failed");
     } finally {
       setPending(false);
     }
   }
 
   async function activate(id: string) {
-    await apiFetch(`/resumes/${id}/activate`, { method: "POST" });
-    await load();
-    setNotice("Active CV updated. Matching now uses this file plus your profile.");
+    try {
+      await apiFetch(`/resumes/${id}/activate`, { method: "POST" });
+      await load();
+      notifySuccess("Active CV updated. Matching now uses this file plus your profile.");
+    } catch (err) {
+      notifyError(err instanceof ApiError ? err.message : "Could not update the active CV");
+    }
   }
 
   async function remove(id: string) {
-    if (!window.confirm("Delete this CV from CareerLens?")) return;
-    await apiFetch(`/resumes/${id}`, { method: "DELETE" });
-    await load();
-    setNotice("CV deleted.");
+    const ok = await confirm({
+      title: "Delete CV",
+      message: "Delete this CV from CareerLens?",
+      confirmLabel: "Delete",
+      danger: true,
+    });
+    if (!ok) return;
+    try {
+      await apiFetch(`/resumes/${id}`, { method: "DELETE" });
+      await load();
+      notifySuccess("CV deleted.");
+    } catch (err) {
+      notifyError(err instanceof ApiError ? err.message : "Could not delete this CV");
+    }
   }
 
   return (
@@ -68,7 +83,6 @@ export default function ResumesPage() {
         description="PDF only, 5MB limit. Extraction is heuristic — edit the profile if a section is wrong. We do not invent missing jobs or degrees."
       />
       {error ? <Alert>{error}</Alert> : null}
-      {notice ? <Alert tone="success">{notice}</Alert> : null}
       <Card className="mb-6">
         <form onSubmit={upload} className="flex flex-col gap-3 sm:flex-row sm:items-end">
           <label className="block flex-1 text-sm">

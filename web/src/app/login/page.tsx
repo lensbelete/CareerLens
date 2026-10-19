@@ -4,29 +4,27 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { Wordmark } from "@/components/brand/wordmark";
-import { Alert } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Field, Input } from "@/components/ui/field";
 import { useAuth } from "@/lib/auth-context";
 import { ApiError } from "@/lib/api";
+import { notifyError } from "@/lib/notify";
 
 export default function LoginPage() {
   const { login } = useAuth();
   const router = useRouter();
   const [email, setEmail] = useState("demo@careerlens.dev");
   const [password, setPassword] = useState("DemoPass123!");
-  const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault();
-    setError("");
     setPending(true);
     try {
       await login(email, password);
       router.replace("/dashboard");
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Unable to log in");
+      notifyError(err instanceof ApiError ? err.message : "Unable to log in", "Sign in failed");
     } finally {
       setPending(false);
     }
@@ -60,7 +58,6 @@ export default function LoginPage() {
               Demo after seed: demo@careerlens.dev / DemoPass123!
             </p>
           </div>
-          {error ? <Alert>{error}</Alert> : null}
           <Field label="Email">
             <Input
               type="email"

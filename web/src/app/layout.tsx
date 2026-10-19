@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
-import { AuthProvider } from "@/lib/auth-context";
+import { ColorSchemeScript, mantineHtmlProps } from "@mantine/core";
+import { AppProviders } from "@/components/providers/app-providers";
+import "@mantine/core/styles.layer.css";
+import "@mantine/notifications/styles.layer.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -10,9 +13,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className="h-full antialiased">
+    <html lang="en" className="h-full antialiased" {...mantineHtmlProps}>
+      <head>
+        <ColorSchemeScript forceColorScheme="light" />
+      </head>
       <body className="min-h-full">
-        <AuthProvider>{children}</AuthProvider>
+        <AppProviders>{children}</AppProviders>
       </body>
     </html>
   );

@@ -4,11 +4,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { Wordmark } from "@/components/brand/wordmark";
-import { Alert } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Field, Input } from "@/components/ui/field";
 import { useAuth } from "@/lib/auth-context";
 import { ApiError } from "@/lib/api";
+import { notifyError } from "@/lib/notify";
 
 export default function RegisterPage() {
   const { register } = useAuth();
@@ -16,14 +16,12 @@ export default function RegisterPage() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault();
-    setError("");
     if (password.length < 8) {
-      setError("Password must be at least 8 characters");
+      notifyError("Password must be at least 8 characters", "Check your details");
       return;
     }
     setPending(true);
@@ -31,7 +29,7 @@ export default function RegisterPage() {
       await register({ fullName, email, password });
       router.replace("/dashboard");
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Unable to register");
+      notifyError(err instanceof ApiError ? err.message : "Unable to register", "Registration failed");
     } finally {
       setPending(false);
     }
@@ -66,7 +64,6 @@ export default function RegisterPage() {
               plaintext.
             </p>
           </div>
-          {error ? <Alert>{error}</Alert> : null}
           <Field label="Full name">
             <Input
               required

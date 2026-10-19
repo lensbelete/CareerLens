@@ -6,6 +6,7 @@ import { Alert, Card, PageHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Field, Input, Textarea } from "@/components/ui/field";
 import { apiFetch, ApiError } from "@/lib/api";
+import { notifyError, notifySuccess } from "@/lib/notify";
 import type { Profile } from "@/types/api";
 
 const emptyProfile: Profile = {
@@ -24,7 +25,6 @@ const emptyProfile: Profile = {
 export default function ProfilePage() {
   const [profile, setProfile] = useState<Profile>(emptyProfile);
   const [error, setError] = useState("");
-  const [notice, setNotice] = useState("");
   const [pending, setPending] = useState(false);
 
   useEffect(() => {
@@ -38,7 +38,6 @@ export default function ProfilePage() {
   async function save(event: FormEvent) {
     event.preventDefault();
     setPending(true);
-    setError("");
     try {
       const saved = await apiFetch<Profile>("/profile", {
         method: "PATCH",
@@ -53,9 +52,9 @@ export default function ProfilePage() {
         }),
       });
       setProfile(saved);
-      setNotice("Profile saved. Matching uses this data immediately.");
+      notifySuccess("Profile saved. Matching uses this data immediately.");
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Save failed");
+      notifyError(err instanceof ApiError ? err.message : "Save failed");
     } finally {
       setPending(false);
     }
@@ -68,7 +67,6 @@ export default function ProfilePage() {
         description="This is the source of truth for matching. Empty fields stay empty — we do not invent employers or degrees."
       />
       {error ? <Alert>{error}</Alert> : null}
-      {notice ? <Alert tone="success">{notice}</Alert> : null}
       <form onSubmit={save} className="space-y-4">
         <Card className="grid gap-3 md:grid-cols-2">
           <Field label="Headline">

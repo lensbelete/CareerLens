@@ -1,3 +1,4 @@
+@layer theme, base, components, mantine, utilities;
 @import "tailwindcss";
 
 @font-face {
@@ -121,4 +122,19 @@ a {
 .dash-fill {
   transform-origin: bottom;
   animation: dash-fill 0.7s ease-out both;
+}
+
+.mantine-Notification-root {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  box-shadow: 0 12px 32px -16px rgba(22, 19, 15, 0.28);
+}
+
+.mantine-Notification-title {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.mantine-Notification-description {
+  color: var(--muted);
 }

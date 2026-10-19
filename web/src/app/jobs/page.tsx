@@ -7,6 +7,7 @@ import { Alert, Card, EmptyState, PageHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Field, Input, Select, Textarea } from "@/components/ui/field";
 import { apiFetch, ApiError } from "@/lib/api";
+import { notifyError, notifySuccess } from "@/lib/notify";
 import type { Job, Paginated } from "@/types/api";
 
 const EMPTY_FORM = {
@@ -54,7 +55,6 @@ export default function JobsPage() {
   async function createJob(event: FormEvent) {
     event.preventDefault();
     setPending(true);
-    setError("");
     try {
       await apiFetch("/jobs", {
         method: "POST",
@@ -69,8 +69,9 @@ export default function JobsPage() {
       setPage(1);
       const refreshed = await apiFetch<Paginated<Job>>("/jobs?page=1&pageSize=8");
       setJobs(refreshed);
+      notifySuccess("Job added to the catalogue.");
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Could not create job");
+      notifyError(err instanceof ApiError ? err.message : "Could not create job");
     } finally {
       setPending(false);
     }
