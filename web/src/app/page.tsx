@@ -21,7 +21,7 @@ export default function Home() {
       <main className="mx-auto max-w-6xl px-6 pb-24">
         <section className="grid items-end gap-12 border-b border-line py-10 lg:grid-cols-[1.15fr_0.85fr] lg:py-16">
           <div>
-            <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-brass">
+            <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-pine">
               A quieter kind of job intelligence
             </p>
             <h1 className="mt-5 max-w-xl font-serif text-5xl leading-[1.08] text-ink sm:text-6xl">
@@ -41,14 +41,14 @@ export default function Home() {
               </Link>
               <Link
                 href="/login"
-                className="rounded-sm border border-line bg-cream/70 px-5 py-2.5 text-sm hover:border-ink/30"
+                className="rounded-sm border border-line bg-white px-5 py-2.5 text-sm hover:border-ink/30"
               >
                 Use the demo account
               </Link>
             </div>
           </div>
-          <aside className="rounded-sm border border-line bg-cream/80 p-6 shadow-[0_20px_50px_-30px_rgba(22,19,15,0.35)]">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-brass">
+          <aside className="rounded-sm border border-line bg-white p-6">
+            <p className="text-[11px] uppercase tracking-[0.2em] text-pine">
               Specimen · Senior Frontend
             </p>
             <div className="mt-4 flex items-baseline justify-between">
@@ -94,7 +94,7 @@ export default function Home() {
             },
           ].map((item) => (
             <article key={item.index} className="bg-background px-0 py-10 md:px-8 md:py-12">
-              <p className="font-serif text-2xl text-brass">{item.index}</p>
+              <p className="font-serif text-2xl text-pine">{item.index}</p>
               <h2 className="mt-4 font-serif text-2xl">{item.title}</h2>
               <p className="mt-3 text-sm leading-7 text-muted">{item.body}</p>
             </article>

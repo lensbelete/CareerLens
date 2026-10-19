@@ -50,7 +50,7 @@ export default function RegisterPage() {
             shared with employers.
           </p>
         </blockquote>
-        <p className="text-[11px] uppercase tracking-[0.2em] text-brass">
+        <p className="text-[11px] uppercase tracking-[0.2em] text-cream/55">
           CareerLens · structured, editable, yours
         </p>
       </section>
@@ -99,7 +99,7 @@ export default function RegisterPage() {
           </Button>
           <p className="text-sm text-muted">
             Already registered?{" "}
-            <Link href="/login" className="font-medium text-brass hover:text-ink">
+            <Link href="/login" className="font-medium text-pine hover:text-ink">
               Log in
             </Link>
           </p>

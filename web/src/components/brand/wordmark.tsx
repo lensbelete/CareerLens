@@ -12,7 +12,7 @@ export function Wordmark({
       <span
         className={`grid h-8 w-8 place-items-center border text-[11px] tracking-[0.18em] ${
           inverted
-            ? "border-brass/50 text-brass"
+            ? "border-cream/40 text-cream"
             : "border-ink/80 text-ink"
         }`}
         aria-hidden

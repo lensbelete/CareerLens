@@ -77,7 +77,7 @@ export default function ResumesPage() {
               name="file"
               type="file"
               accept="application/pdf"
-              className="block w-full text-sm file:mr-3 file:rounded-sm file:border-0 file:bg-paper file:px-3 file:py-2"
+              className="block w-full text-sm file:mr-3 file:rounded-sm file:border-0 file:bg-white file:px-3 file:py-2"
             />
           </label>
           <Button type="submit" disabled={pending}>

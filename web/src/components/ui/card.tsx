@@ -7,7 +7,7 @@ export function Card({
 }) {
   return (
     <section
-      className={`rounded-sm border border-line bg-cream/90 p-5 shadow-[0_1px_0_rgba(22,19,15,0.04)] ${className}`}
+      className={`rounded-sm border border-line bg-white p-5 ${className}`}
     >
       {children}
     </section>
@@ -62,9 +62,9 @@ export function Alert({
   children: React.ReactNode;
 }) {
   const styles = {
-    error: "border-[#d7b4ae] bg-[#f8ece9] text-[#7a2e24]",
-    success: "border-[#c9d4c7] bg-[#eef3ee] text-pine",
-    info: "border-line bg-cream text-ink",
+    error: "border-[#ead8d4] bg-[#fbf6f5] text-[#7a2e24]",
+    success: "border-[#d7e2d8] bg-[#f4f8f5] text-pine",
+    info: "border-[#d7e2d8] bg-[#f4f8f5] text-pine",
   }[tone];
   return (
     <div className={`rounded-sm border px-3 py-2.5 text-sm ${styles}`} role="status">
@@ -81,10 +81,10 @@ export function Badge({
   tone?: "neutral" | "teal" | "amber" | "rose" | "sample";
 }) {
   const styles = {
-    neutral: "border-line bg-paper text-ink/80",
-    teal: "border-[#c9d4c7] bg-[#eef3ee] text-pine",
-    amber: "border-[#e4d3b0] bg-[#f6eedc] text-brass",
-    rose: "border-[#d7b4ae] bg-[#f8ece9] text-[#7a2e24]",
+    neutral: "border-line bg-white text-ink/80",
+    teal: "border-[#d7e2d8] bg-[#f4f8f5] text-pine",
+    amber: "border-line bg-white text-muted",
+    rose: "border-[#ead8d4] bg-[#fbf6f5] text-[#7a2e24]",
     sample: "border-ink bg-ink text-cream",
   }[tone];
   return (
@@ -98,7 +98,7 @@ export function Badge({
 
 export function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-brass">
+    <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-pine">
       {children}
     </p>
   );

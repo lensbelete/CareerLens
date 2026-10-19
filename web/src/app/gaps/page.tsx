@@ -106,7 +106,7 @@ function GapsContent() {
                 </p>
                 <Link
                   href={`/gaps?jobId=${row.job.id}`}
-                  className="mt-2 inline-block text-sm font-medium text-brass"
+                  className="mt-2 inline-block text-sm font-medium text-pine"
                 >
                   Recommendations for this role
                 </Link>

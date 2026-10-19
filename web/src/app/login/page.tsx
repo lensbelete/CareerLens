@@ -45,7 +45,7 @@ export default function LoginPage() {
             is ready after seeding.
           </p>
         </blockquote>
-        <p className="text-[11px] uppercase tracking-[0.2em] text-brass">
+        <p className="text-[11px] uppercase tracking-[0.2em] text-cream/55">
           CareerLens · private to your account
         </p>
       </section>
@@ -84,7 +84,7 @@ export default function LoginPage() {
           </Button>
           <p className="text-sm text-muted">
             No account?{" "}
-            <Link href="/register" className="font-medium text-brass hover:text-ink">
+            <Link href="/register" className="font-medium text-pine hover:text-ink">
               Register
             </Link>
           </p>

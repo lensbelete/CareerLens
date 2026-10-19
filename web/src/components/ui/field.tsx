@@ -22,7 +22,7 @@ export function Field({
 }
 
 const controlClass =
-  "w-full rounded-sm border border-line bg-cream px-3 py-2.5 text-sm text-ink outline-none placeholder:text-muted/70 transition-colors focus:border-brass focus:ring-1 focus:ring-brass/30";
+  "w-full rounded-sm border border-line bg-white px-3 py-2.5 text-sm text-ink outline-none placeholder:text-muted/70 transition-colors focus:border-pine focus:ring-1 focus:ring-pine/20";
 
 export function Input({ className = "", ...props }: InputHTMLAttributes<HTMLInputElement>) {
   return <input className={`${controlClass} ${className}`} {...props} />;

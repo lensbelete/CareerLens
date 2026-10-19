@@ -36,7 +36,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen text-ink">
-      <div className="flex items-center justify-between border-b border-line bg-cream/80 px-4 py-3 backdrop-blur lg:hidden">
+      <div className="flex items-center justify-between border-b border-line bg-white px-4 py-3 lg:hidden">
         <Wordmark href="/dashboard" />
         <button
           type="button"
@@ -66,10 +66,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   key={item.href}
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className={`rounded-sm px-3 py-2 text-sm ${
+                  className={`rounded-full px-3 py-2 text-sm ${
                     active
-                      ? "bg-cream/10 text-cream"
-                      : "text-cream/65 hover:bg-cream/5 hover:text-cream"
+                      ? "bg-cream/15 text-cream"
+                      : "text-cream/70 hover:bg-cream/10 hover:text-cream"
                   }`}
                 >
                   {item.label}
@@ -86,7 +86,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 logout();
                 router.replace("/login");
               }}
-              className="mt-4 text-[11px] uppercase tracking-[0.18em] text-brass hover:text-cream"
+              className="mt-4 text-[11px] uppercase tracking-[0.18em] text-cream/55 hover:text-cream"
             >
               Log out
             </button>

@@ -128,7 +128,7 @@ export default function JobDetailPage({
                   <p className="mt-2 text-xs text-muted">{match.disclaimer}</p>
                   <dl className="mt-4 grid grid-cols-2 gap-2 text-sm sm:grid-cols-5">
                     {Object.entries(match.breakdown).map(([key, value]) => (
-                      <div key={key} className="rounded-sm bg-paper p-2">
+                      <div key={key} className="rounded-sm border border-line bg-white p-2">
                         <dt className="text-xs capitalize text-muted">{key.replace(/([A-Z])/g, " $1")}</dt>
                         <dd className="font-medium tabular-nums">{Math.round(value * 100)}%</dd>
                       </div>
@@ -171,7 +171,7 @@ export default function JobDetailPage({
                         ))
                       )}
                     </ul>
-                    <Link href={`/gaps?jobId=${job.id}`} className="mt-3 inline-block text-sm font-medium text-brass">
+                    <Link href={`/gaps?jobId=${job.id}`} className="mt-3 inline-block text-sm font-medium text-pine">
                       Recommendations
                     </Link>
                   </Card>
